@@ -14,11 +14,11 @@
 #define IA32_VMX_PINBASED_CTLS				0x481
 #define IA32_VMX_ENTRY_CTLS					0x484
 #define IA32_VMX_EXIT_CTLS					0x483
-#define IA32_VMX_PRIMARY_PROCBASED_CTLS 	0x482
-#define IA32_VMX_SECONDARY_PROCBASED_CTLS 	0x48B
+#define IA32_VMX_PROCBASED_CTLS 			0x482
+#define IA32_VMX_PROCBASED_CTLS2 			0x48B
 
 /*
- * struct caapability_info
+ * struct capability_info
  *
  * Represents a single capability (bit number and description).
  * Used by report_capability to output VMX capabilities.
@@ -190,6 +190,30 @@ detect_vmx_features(void)
 	pr_info("Pinbased Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
 	report_capability(pinbased, 5, lo, hi);
+
+	/* Entry Controls */
+	rdmsr(IA32_VMX_ENTRY_CTLS, lo, hi);
+	pr_info("Entry Controls MSR: 0x%llx\n",
+		(uint64_t)(lo | (uint64_t)hi << 32));
+	report_capability(entry, 5, lo, hi);
+
+	/* Exit Controls */
+	rdmsr(IA32_VMX_EXIT_CTLS, lo, hi);
+	pr_info("Exit Controls MSR: 0x%llx\n",
+		(uint64_t)(lo | (uint64_t)hi << 32));
+	report_capability(exit, 5, lo, hi);
+
+	/* Primary Processor-Based VM Execution Controls */
+	rdmsr(IA32_VMX_PROCBASED_CTLS, lo, hi);
+	pr_info("Primary Controls MSR: 0x%llx\n",
+		(uint64_t)(lo | (uint64_t)hi << 32));
+	report_capability(primary, 5, lo, hi);
+
+	/* Secondary Processor-Based VM Execution Controls */
+	rdmsr(IA32_VMX_PROCBASED_CTLS2, lo, hi);
+	pr_info("Secondary Controls MSR: 0x%llx\n",
+		(uint64_t)(lo | (uint64_t)hi << 32));
+	report_capability(secondary, 5, lo, hi);
 }
 
 /*
