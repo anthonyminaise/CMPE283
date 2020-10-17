@@ -28,7 +28,6 @@ struct capability_info {
 	const char *name;
 };
 
-
 /*
  * Pinbased capabilities
  * See SDM volume 3, section 24.6.1
@@ -41,6 +40,108 @@ struct capability_info pinbased[5] =
 	{ 6, "Activate VMX Preemption Timer" },
 	{ 7, "Process Posted Interrupts" }
 };
+
+/*
+ * VM-Entry Controls capabilities
+ * See SDM volume 3, section 24.8.1
+ */
+struct capability_info entry[12] = {
+	{ 2, "Load debug controls"},
+	{ 9, "IA-32e mode guest"},
+	{ 10, "Entry to SMM"},
+	{ 11, "Deactivate dual-monitor treatment"},
+	{ 13, "Load IA32_PERF_GLOBAL_CTRL"},
+	{ 14, "Load IA32_PAT"},
+	{ 15, "Load IA32_EFER"},
+	{ 16, "Load IA32_BNDCFGS"},
+	{ 17, "Conceal VM entries from Intel PT"},
+	{ 18, "Load IA32_RTIT_CTL"},
+	{ 20, "Load CET state"},
+	{ 22, "Load PKRS"}
+}
+
+/*
+ * VM-Exit Controls capabilities
+ * See SDM volume 3, section 24.7.1
+ */
+struct capability_info exit[14] = {
+	{ 2, "Save debug controls"},
+	{ 9, "Host address-space size"},
+	{ 12, "Load IA32_PERF_GLOBAL_CTRL"},
+	{ 15, "Acknowledge interrupt on exit"},
+	{ 18, "Save IA32_PAT"},
+	{ 19, "Load IA32_PAT"},
+	{ 20, "Save IA32_EFER"},
+	{ 21, "Load IA32_EFER"},
+	{ 22, "Save VMX-preemption timer value"},
+	{ 23, "Clear IA32_BNDCFGS"},
+	{ 24, "Conceal VMX from PT"},
+	{ 25, "Clear IA32_RTIT_CTL"},
+	{ 28, "Load CET state"},
+	{ 29, "Load PKRS"}
+}
+
+/*
+ * Primary Processor-Based VM Execution Controls capabilities
+ * See SDM volume 3, section 24.6.1
+ */
+struct capability_info primary[21] = {
+	{ 2, "Interrupt-window exiting"},
+	{ 3, "Use TSC offsetting"},
+	{ 7, "HLT exiting"},
+	{ 9, "INVLPG exiting"},
+	{ 10, "Save debug controls"},
+	{ 11, "RDPMC exiting"},
+	{ 12, "RDTSC exiting"},
+	{ 15, "CR3-load exiting"},
+	{ 16, "CR3-store exiting"},
+	{ 19, "CR8-load exiting"},
+	{ 20, "CR8-store exiting"},
+	{ 21, "Use TPR shadow"},
+	{ 22, "NMI-window exiting"},
+	{ 23, "MOV-DR exiting"},
+	{ 24, "Unconditional I/O exiting"},
+	{ 25, "Use I/O bitmaps"},
+	{ 27, "Monitor trap flag"},
+	{ 28, "Use MSR bitmaps"},
+	{ 29, "MONITOR exiting"},
+	{ 30, "PAUSE exiting"},
+	{ 31, "Activate secondary controls"}
+}
+
+/*
+ * Secondary Processor-Based VM Execution Controls capabilities
+ * See SDM volume 3, section 24.6.1
+ */
+struct capability_info secondary[27] = {
+	{ 0, "Virtualize APIC accesses"},
+	{ 1, "Enable EPT"},
+	{ 2, "Descriptor-table exiting"},
+	{ 3, "Enable RDTSCP"},
+	{ 4, "Virtualize x2APIC mode"},
+	{ 5, "Enable VPID"},
+	{ 6, "WBINVD exiting"},
+	{ 7, "Unrestricted guest"},
+	{ 8, "APIC-register virtualization"},
+	{ 9, "Virtual-interrupt delivery"},
+	{ 10, "PAUSE-loop exiting"},
+	{ 11, "RDRAND exiting"},
+	{ 12, "Enable INVPCID"},
+	{ 13, "Enable VM functions"},
+	{ 14, "VMCS shadowing"},
+	{ 15, "Enable ENCLS exiting"},
+	{ 16, "RDSEED exiting"},
+	{ 17, "Enable PML"},
+	{ 18, "EPT-violation #VE"},
+	{ 19, "Conceal VMX from PT"},
+	{ 20, "Enable XSAVES/XRSTORS"},
+	{ 22, "Mode-based execute control for EPT"},
+	{ 23, "Sub-page write permissions for EPT"},
+	{ 24, "Intel PT uses guest physical addresses"},
+	{ 25, "Use TSC scaling"},
+	{ 26, "Enable user wait and pause"},
+	{ 28, "Enable ENCLV exiting"}
+}
 
 /*
  * report_capability
