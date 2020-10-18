@@ -195,25 +195,25 @@ detect_vmx_features(void)
 	rdmsr(IA32_VMX_ENTRY_CTLS, lo, hi);
 	pr_info("Entry Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
-	report_capability(entry, 5, lo, hi);
+	report_capability(entry, 12, lo, hi);
 
 	/* Exit Controls */
 	rdmsr(IA32_VMX_EXIT_CTLS, lo, hi);
 	pr_info("Exit Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
-	report_capability(exit, 5, lo, hi);
+	report_capability(exit, 14, lo, hi);
 
 	/* Primary Processor-Based VM Execution Controls */
 	rdmsr(IA32_VMX_PROCBASED_CTLS, lo, hi);
 	pr_info("Primary Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
-	report_capability(primary, 5, lo, hi);
+	report_capability(primary, 21, lo, hi);
 
 	/* Secondary Processor-Based VM Execution Controls */
 	rdmsr(IA32_VMX_PROCBASED_CTLS2, lo, hi);
 	pr_info("Secondary Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
-	report_capability(secondary, 5, lo, hi);
+	report_capability(secondary, 27, lo, hi);
 }
 
 /*
