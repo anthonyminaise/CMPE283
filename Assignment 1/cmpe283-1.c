@@ -64,7 +64,7 @@ struct capability_info entry[12] = {
  * VM-Exit Controls capabilities
  * See SDM volume 3, section 24.7.1
  */
-struct capability_info exit[14] = {
+struct capability_info toExit[14] = {
 	{ 2, "Save debug controls"},
 	{ 9, "Host address-space size"},
 	{ 12, "Load IA32_PERF_GLOBAL_CTRL"},
@@ -201,7 +201,7 @@ detect_vmx_features(void)
 	rdmsr(IA32_VMX_EXIT_CTLS, lo, hi);
 	pr_info("Exit Controls MSR: 0x%llx\n",
 		(uint64_t)(lo | (uint64_t)hi << 32));
-	report_capability(exit, 14, lo, hi);
+	report_capability(toExit, 14, lo, hi);
 
 	/* Primary Processor-Based VM Execution Controls */
 	rdmsr(IA32_VMX_PROCBASED_CTLS, lo, hi);
