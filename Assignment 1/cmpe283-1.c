@@ -58,7 +58,7 @@ struct capability_info entry[12] = {
 	{ 18, "Load IA32_RTIT_CTL"},
 	{ 20, "Load CET state"},
 	{ 22, "Load PKRS"}
-}
+};
 
 /*
  * VM-Exit Controls capabilities
@@ -79,7 +79,7 @@ struct capability_info exit[14] = {
 	{ 25, "Clear IA32_RTIT_CTL"},
 	{ 28, "Load CET state"},
 	{ 29, "Load PKRS"}
-}
+};
 
 /*
  * Primary Processor-Based VM Execution Controls capabilities
@@ -107,7 +107,7 @@ struct capability_info primary[21] = {
 	{ 29, "MONITOR exiting"},
 	{ 30, "PAUSE exiting"},
 	{ 31, "Activate secondary controls"}
-}
+};
 
 /*
  * Secondary Processor-Based VM Execution Controls capabilities
@@ -141,7 +141,7 @@ struct capability_info secondary[27] = {
 	{ 25, "Use TSC scaling"},
 	{ 26, "Enable user wait and pause"},
 	{ 28, "Enable ENCLV exiting"}
-}
+};
 
 /*
  * report_capability
