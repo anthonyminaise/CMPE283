@@ -14,6 +14,7 @@
 #include <linux/vmalloc.h>
 #include <linux/uaccess.h>
 #include <linux/sched/stat.h>
+#include <asm/atomic.h>
 
 #include <asm/processor.h>
 #include <asm/user.h>
@@ -30,6 +31,11 @@
  */
 u32 kvm_cpu_caps[NCAPINTS] __read_mostly;
 EXPORT_SYMBOL_GPL(kvm_cpu_caps);
+
+atomic64_t exit_counter = ATOMIC64_INIT(0);
+atomic64_t exit_length = ATOMIC64_INIT(0);
+EXPORT_SYMBOL(exit_counter);
+EXPORT_SYMBOL(exit_length);
 
 static u32 xstate_required_size(u64 xstate_bv, bool compacted)
 {
@@ -1108,7 +1114,32 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 
 	eax = kvm_rax_read(vcpu);
 	ecx = kvm_rcx_read(vcpu);
-	kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
+
+    // Start of CMPE 283 assignment changes
+	// kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
+
+    if (eax == 0x4fffffff){
+        printk(KERN_INFO "Update registers");
+        kvm_cpuid(vcpu,&eax,&ebx,&ecx,&edx,true);
+        printk(KERN_INFO "Update exit counter, EAX = %llu", atomic64_read(&exit_counter));
+        eax = atomic64_read(&exit_counter);
+        printk(KERN_INFO "Total number of exits, update EAX = %u", eax);
+
+        // High 32 bits go to EBX
+        printk(KERN_INFO "Exit length = %llu", (atomic64_read(&exit_length) >> 32));
+        ebx = (atomic64_read(&exit_length) >> 32);
+        printk(KERN_INFO "Update exit length, EBX = %u", ebx);
+
+        // Low 32 bits go to ECX
+        ecx = (atomic64_read(&exit_length) >> 0xFFFFFFFF);
+        printk(KERN_INFO "Update ECX = %u\n", ecx);
+    }
+    else {
+        kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
+    }
+
+    // End of CMPE 283 assignment changes
+
 	kvm_rax_write(vcpu, eax);
 	kvm_rbx_write(vcpu, ebx);
 	kvm_rcx_write(vcpu, ecx);
