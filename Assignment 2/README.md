@@ -9,6 +9,8 @@ By: Anthony Minaise, SID: 010246509
     - Started by cloning the linux repo from torvalds to my Ubuntu VM
     - After the clone finished, I initially ran the "Building the Kernal" terminal lines to get things started and see how running the kernal works
     - Identify where the cpuid.c and vmx.c file is
+        - cpuid.c can be found in linux/arch/x86/kvm 
+        - vmx.c can be found in linux/arch/x86/kvm/vmx
     - 
 3. Comment on the frequency of exits – does the number of exits increase at a stable rate? Or are there more exits performed during certain VM operations? Approximately how many exits does a full VM boot entail?
     - [comment goes here]
