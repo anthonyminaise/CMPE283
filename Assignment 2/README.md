@@ -16,4 +16,6 @@ By: Anthony Minaise, SID: 010246509
         - Found that the very last method holds the emulation code, so I added an if else statement to handle the case, do the proper assignment to the registers, and output to the console.
     - Looked at vmx.c to see if there are any necessary changes needed to accommodate the changes in cpuid.c
 3. Comment on the frequency of exits – does the number of exits increase at a stable rate? Or are there more exits performed during certain VM operations? Approximately how many exits does a full VM boot entail?
-    - [comment goes here]
+    - I couldn't test out my changes in an nested VM since building the kernel took too long each time I tried. My computer holding my hypervisor and VMs was constantly spinning at 100% memory and spiked to 100% CPU all the time, so I might have given too many resources to my VM and that could be the reason why it took so long.
+    - My initial guess would be that the number of exits would not increase at a stable rate because operations that are triggered after a VM exits.
+    - As of now, I do not have an approximation for the number of exits.

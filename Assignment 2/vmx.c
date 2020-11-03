@@ -47,6 +47,9 @@
 #include <asm/spec-ctrl.h>
 #include <asm/virtext.h>
 #include <asm/vmx.h>
+#include <asm/atomic.h>
+#include <asm/atomic64_64.h>
+#include <asm/msr.h>
 
 #include "capabilities.h"
 #include "cpuid.h"
@@ -62,6 +65,9 @@
 #include "vmcs12.h"
 #include "vmx.h"
 #include "x86.h"
+
+extern atomic64_t exit_counter;
+extern atomic64_t exit_length;
 
 MODULE_AUTHOR("Qumranet");
 MODULE_LICENSE("GPL");
