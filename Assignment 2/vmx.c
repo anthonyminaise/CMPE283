@@ -5939,6 +5939,9 @@ static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 	struct vcpu_vmx *vmx = to_vmx(vcpu);
 	u32 exit_reason = vmx->exit_reason;
 	u32 vectoring_info = vmx->idt_vectoring_info;
+	uint64_t start_time = rdtsc()
+
+	arch_atomic64_inc(&exit_counter)
 
 	/*
 	 * Flush logged GPAs PML buffer, this will make dirty_bitmap more
@@ -6070,6 +6073,8 @@ static int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 					 kvm_vmx_max_exit_handlers);
 	if (!kvm_vmx_exit_handlers[exit_reason])
 		goto unexpected_vmexit;
+
+	arch_atomic64_add(rdtsc() - start_time, &exit_length);
 
 	return kvm_vmx_exit_handlers[exit_reason](vcpu);
 
