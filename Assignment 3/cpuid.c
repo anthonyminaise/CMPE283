@@ -1119,7 +1119,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 	eax = kvm_rax_read(vcpu);
 	ecx = kvm_rcx_read(vcpu);
 
-	if (eax == 0x4fffffff) {
+	if (eax == 0x4fffffff) { // Assignment 2
 		printk(KERN_INFO "Updating registers");
 		kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, true);
 		printk(KERN_INFO "Updating exit counter, EAX = %llu", atomic64_read(&exit_counter));
@@ -1135,29 +1135,29 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 		ecx = (atomic64_read(&exit_duration) & 0xFFFFFFFF);
 		printk(KERN_INFO "Updated exit duration for ECX = %u", ecx);
 
-	} else if (0x4ffffffe) {
-		// exit reasons found in SDM
+	} else if (0x4ffffffe) { // Assignment 3
+		// Input not defined by the SDM
 		if (ecx>=0 && ecx<=68 && ecx!=35 && ecx!=38 && ecx!=42 && ecx!=65) {
-			// exit types not enabled in KVM
-			if () {
-				printk(KERN_INFO "Exit type (%u) is not enabled in KVM", ecx); 
+			// Exit types not enabled in KVM, then return all 4 registers as 0
+			if (eax==3 || eax==4 || eax==5 || eax==6 || eax==11 || eax==16 || eax==17 || eax==33 || eax==34 || eax==51 || eax==63 || eax== 64 || eax==66 || eax== 67 || eax== 68) {
+				printk(KERN_INFO "Exit type (%u) is not enabled in KVM.", ecx); 
 				eax=0;
 				ebx=0;
 				ecx=0;
 				edx=0;
 			} else {
-				// return leaf exit counter
+				// Return leaf exit counter
 				eax = atomic64_read(&leaf_exit_counter[ecx]);
-		       	printk(KERN_INFO "Exit Number=%u; Exit Counter=%u", ecx, eax);
+		       		printk(KERN_INFO "Exit Number=%u; Exit Counter=%u", ecx, eax);
 			}
 
 
 		} else {
-			printk(KERN_INFO "Exit type (%u) is not defined in SDM", ecx); 
+			printk(KERN_INFO "Exit type (%u) is not defined in SDM.", ecx); 
 			eax=0;
-		    ebx=0;
-		    ecx=0;
-		    edx=0xFFFFFFFF;
+		    	ebx=0;
+		    	ecx=0;
+		    	edx=0xFFFFFFFF;
 		}
 	} else {
 		kvm_cpuid(vcpu, &eax, &ebx, &ecx, &edx, false);
