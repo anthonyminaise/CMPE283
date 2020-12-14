@@ -1135,7 +1135,7 @@ int kvm_emulate_cpuid(struct kvm_vcpu *vcpu)
 		ecx = (atomic64_read(&exit_duration) & 0xFFFFFFFF);
 		printk(KERN_INFO "Updated exit duration for ECX = %u", ecx);
 
-	} else if (0x4ffffffe) { // Assignment 3
+	} else if (eax == 0x4ffffffe) { // Assignment 3
 		// Input not defined by the SDM
 		if (ecx>=0 && ecx<=68 && ecx!=35 && ecx!=38 && ecx!=42 && ecx!=65) {
 			// Exit types not enabled in KVM, then return all 4 registers as 0
