@@ -6,6 +6,7 @@ Your assignment is to modify the CPUID emulation code in KVM to report back addi
 
  - Anthony Minaise - I worked on this with Haasitha Pidaparthi. For the most part, we pair programmed and researched the changes in cpuid.c and vmx.c. As for the starting files, we used Haasitha's files from assignment 2 as the base code and added onto it. We refered to the Intel SDM exit reasons list and compared that to the kvm exit reason list found in vmx.c. We both tried to run the changes on our own VMs to be safe.
 - Haasitha Pidaparthi - I worked on this Assignment with Anthony. We both started off by individually doing our own reasearch for this assignment before collaborating. I went through the code from Assignment 2 and referred the SDM to figure out the appropriate exit reasons and KVM exit handllers needed to run the cpuid.c and vmx.c files. Additionally, I tested the code with a sample test file to make sure the program was running. 
+- Note: we felt like the part where it checks the KVM enabled exits should have went in vmx.c, but we put it in the cpuid.c in the end since we were most comfortable with that location.
 
 ## Steps to Build Assignment 3
 This assignment build is similar to Assignment 2
